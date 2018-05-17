@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "alexa-sdk": "^1.0.10",
+    "ask-sdk": "^2.0.4",
     "request": "^2.86.0"
   },
   "scripts": {
