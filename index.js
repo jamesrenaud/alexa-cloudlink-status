@@ -56,8 +56,7 @@ exports.handler = async function (event, context) {
                 SessionEndedRequestHandler,
                 NexusStatusIntentHandler
             )
-            .addErrorHandlers(ErrorHandler)
-            .create();
+            .lambda();
     }
 
     return skill.invoke(event, context);
