@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepackage": "rimraf ./alexa-skill.zip",
     "package": "7z a -r ./alexa-skill.zip ./*.* && 7z a -r ./alexa-skill.zip ./node_modules",
-    "predeploy": "npm version patch && npm run package",
+    "predeploy": "npm run package",
     "deploy": "aws lambda update-function-code --profile devopstest --region us-east-1 --zip-file fileb://alexa-skill.zip --function-name Alexa-Cloud-Status --publish"
   }
 }

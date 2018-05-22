@@ -1,66 +1,11 @@
 'use strict';
 
-// const Alexa = require('alexa-sdk');
-
-// const APP_ID = undefined;  // TODO replace with your app ID (OPTIONAL).
-
-// var handlers = {
-//     "StatusIntent": function () {
-//         this.response.speak("Today's CloudLink forecast is sunny");
-//         this.emit(':responseReady');
-//     },
-//     "NexusStatusIntent": function () {
-//         GetDeployServerResponseTime()
-//             .then(data => {
-//                 let responseTime = data.elapsedTime;
-//                 this.response.speak("The current response time for Nexus is " + responseTime + " milliseconds");
-//                 this.emit(':responseReady');
-//             })
-//             .catch(err =>{
-//                 this.response.speak("I'm having trouble reaching the Nexus server right now, please try again");
-//                 this.emit(':responseReady');
-//             })
-
-//     },
-//     "LaunchRequest": function () {
-//         this.response.speak("Welcome to Cloud Link");
-//         this.emit(':responseReady');
-//     }
-// };
-
-// exports.handler = function (event, context, callback) {
-//     var alexa = Alexa.handler(event, context);
-//     alexa.registerHandlers(handlers);
-//     alexa.execute();
-// };
-
-'use strict';
-
-const Alexa = require('ask-sdk-core');
+const Alexa = require('ask-sdk');
 const request = require('request');
-// use 'ask-sdk' if standard SDK module is installed
-
-// Code for the handlers here
 
 let skill;
-
-exports.handler = async function (event, context) {
-    console.log(`REQUEST++++${JSON.stringify(event)}`);
-    if (!skill) {
-        skill = Alexa.SkillBuilders.custom()
-            .addRequestHandlers(
-                LaunchRequestHandler,
-                StatusIntentIntentHandler,
-                HelpIntentHandler,
-                CancelAndStopIntentHandler,
-                SessionEndedRequestHandler,
-                NexusStatusIntentHandler
-            )
-            .lambda();
-    }
-
-    return skill.invoke(event, context);
-}
+let incidentTitle;
+let incidentMessage;
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
@@ -77,20 +22,6 @@ const LaunchRequestHandler = {
     }
 };
 
-const StatusIntentIntentHandler = {
-    canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-            && handlerInput.requestEnvelope.request.intent.name === 'StatusIntent';
-    },
-    handle(handlerInput) {
-
-        const speechText = 'Todays CloudLink forecast is sunny';
-
-        return handlerInput.responseBuilder
-            .speak(speechText);
-    }
-};
-
 const NexusStatusIntentHandler = {
     canHandle(handlerInput) {
         return handlerInput.requestEnvelope.request.type === 'IntentRequest'
@@ -98,17 +29,62 @@ const NexusStatusIntentHandler = {
     },
     handle(handlerInput) {
 
-        let speechText = '';
-        GetDeployServerResponseTime()
+        let speechText;
+        return GetDeployServerResponseTime()
             .then(data => {
                 speechText = "The current response time for Nexus is " + data.elapsedTime + " milliseconds"
             })
+            .then(data => {
+                console.log(speechText);
+                return handlerInput.responseBuilder
+                    .speak(speechText)
+                    .getResponse();
+            })
             .catch(err => {
                 speechText = "I'm having trouble reaching the Nexus server right now, please try again";
+                return handlerInput.responseBuilder
+                    .speak(speechText)
+                    .getResponse();
             })
+    }
+};
 
-        return handlerInput.responseBuilder
-            .speak(speechText);
+const StatusIntentIntentHandler = {
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'StatusIntent';
+    },
+    handle(handlerInput) {
+
+        let speechText;
+
+        // speechText = 'The CloudLink cloud is currently <say-as interpret-as="expletive">fucking</say-as> sunny, with blue skies, and rainbows. <say-as interpret-as="interjection">Booya!</say-as>';
+        // return handlerInput.responseBuilder
+        //     .speak(speechText)
+        //     .getResponse();
+
+        return CheckForIncidents()
+            .then(data => {
+                if (data) {
+                    speechText = 'The CloudLink cloud is currently <say-as interpret-as="expletive">trend</say-as>ing sunny, blue skies, and rainbows. <say-as interpret-as="interjection">Booya!</say-as>';
+
+                }
+                else {
+                    speechText = '<p>An incident has been reported on the CloudLink Cloud. <say-as interpret-as="interjection">dun dun dun!</say-as></p><p> The title of the incident is ' + incidentTitle + '</p> <p>The message of the incident is ' + incidentMessage + '</p><p> We are currently working on a fix</p> <audio src="https://s3.amazonaws.com/ask-soundlibrary/battle/amzn_sfx_battle_group_clanks_01.mp3"/>';
+                }
+            })
+            .then(data => {
+                console.log(speechText);
+                return handlerInput.responseBuilder
+                    .speak(speechText)
+                    .getResponse();
+            })
+            .catch(err => {
+                speechText = 'Im having trouble determining the forecast of the cloud right now, please try again';
+                return handlerInput.responseBuilder
+                    .speak(speechText)
+                    .getResponse();
+            })
     }
 };
 
@@ -178,4 +154,79 @@ function GetDeployServerResponseTime() {
             }
         })
     })
+}
+
+function CheckForIncidents() {
+    return new Promise((resolve, reject) => {
+        let statusCreds = {
+            url: "https://status.dev.mitel.io",
+            apiKey: "sTSldlMMXfMMdh4VOVy5"
+        }
+
+        var options = {
+            url: statusCreds.url + '/api/v1/incidents?per_page=100',
+            method: 'GET',
+            headers: {
+                'X-Cachet-Token': statusCreds.apiKey
+            }
+        }
+
+        request(options, function (error, response, body) {
+            if (error) {
+                console.log(error);
+                reject(error);
+            }
+            else {
+                if (response.statusCode == 200) {
+                    let data = JSON.parse(response.body);
+                    let isCloudHealthy = true;
+                    data.data.find(function (incident) {
+                        if (incident.status < 4 && incident.status != 0) {
+                            isCloudHealthy = false;
+                            incidentTitle = incident.name;
+                            incidentMessage = incident.message;
+                        }
+                    })
+                    resolve(isCloudHealthy);
+                }
+                else {
+                    let data = JSON.parse(response.body);
+                    reject(data);
+                }
+            }
+        })
+    })
+}
+
+const ErrorHandler = {
+    canHandle() {
+        return true;
+    },
+    handle(handlerInput, error) {
+        console.log(`Error handled: ${error.message}`);
+
+        return handlerInput.responseBuilder
+            .speak('Sorry, I can\'t understand the command. Please say again.')
+            .reprompt('Sorry, I can\'t understand the command. Please say again.')
+            .getResponse();
+    },
+};
+
+exports.handler = async function (event, context) {
+    console.log(`REQUEST++++${JSON.stringify(event)}`);
+    if (!skill) {
+        skill = Alexa.SkillBuilders.custom()
+            .addRequestHandlers(
+                LaunchRequestHandler,
+                StatusIntentIntentHandler,
+                NexusStatusIntentHandler,
+                HelpIntentHandler,
+                CancelAndStopIntentHandler,
+                SessionEndedRequestHandler,
+        )
+            .addErrorHandlers(ErrorHandler)
+            .create();
+    }
+
+    return skill.invoke(event, context);
 }
