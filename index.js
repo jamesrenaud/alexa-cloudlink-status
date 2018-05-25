@@ -68,14 +68,14 @@ const StatusIntentIntentHandler = {
         return CheckForBadComponents()
             .then(data => {
                 if (data) {
-                    speechText = 'The CloudLink cloud is currently sunny, blue skies, and rainbows. All components are reporting operational. <say-as interpret-as="interjection">Booya!</say-as>';
+                    speechText = 'The CloudLink cloud is currently sunny, blue skies, and rainbows. All services are reporting operational. <say-as interpret-as="interjection">Yay!</say-as>';
                 }
                 else {
                     let tempdate = incidentStatus.split(' ');
                     let temptime = tempdate[1].split(':');
                     let date = tempdate[0].replace(/-/g, '').toString();
                     let time = formatAMPM(new Date(tempdate));
-                    speechText = '<say-as interpret-as="interjection">uh oh!</say-as> <p>A component is reporting an unhealthy state. <say-as interpret-as="interjection">shucks!</say-as></p><p> The affected component is ' + incidentTitle + '</p> <p>The component is currently reporting a status of ' + incidentMessage + '</p> <p>The component status was updated on <say-as interpret-as="date">' + date + '</say-as> at ' + time + '</p>';
+                    speechText = '<say-as interpret-as="interjection">uh oh!</say-as> <p>A component is reporting an unhealthy state. <say-as interpret-as="interjection">shucks!</say-as></p><p> The affected service is ' + incidentTitle + '</p> <p>its currently reporting a status of ' + incidentMessage + '</p> <p>This status was updated on <say-as interpret-as="date">' + date + '</say-as> at ' + time + '</p>';
                 }
             })
             .then(data => {
@@ -105,7 +105,7 @@ const CheckForIncidentsHandler = {
         return CheckForIncidents()
             .then(data => {
                 if (data) {
-                    speechText = '<p>There are currently no incidents being reported on the CloudLink cloud.</p> <p><say-as interpret-as="interjection">Booya!</say-as></p>'
+                    speechText = '<p>There are currently no issues being reported on the CloudLink cloud.</p> <p><say-as interpret-as="interjection">Booya!</say-as></p>'
                 }
                 else {
                     speechText = '<p>An incident has been reported on the CloudLink Cloud. <say-as interpret-as="interjection">dun dun dun!</say-as></p><p> The title of the incident is ' + incidentTitle + '</p> <p>The message of the incident is ' + incidentMessage + '</p> <p>' + statusResponses[incidentStatus] + '</p>';
@@ -119,6 +119,62 @@ const CheckForIncidentsHandler = {
             })
             .catch(err => {
                 speechText = 'Im having trouble determining the forecast of the cloud right now, please try again';
+                return handlerInput.responseBuilder
+                    .speak(speechText)
+                    .getResponse();
+            })
+    }
+};
+
+const SendChatMessageHandler = {
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'SendChatIntent';
+    },
+    handle(handlerInput) {
+        let targetTeam = handlerInput.requestEnvelope.request.intent.slots.group.value;
+        let speechText;
+
+        return SendChatMessage('This is a page from the DevOps team for the ' + targetTeam + ' team. Please standby for more information.')
+            .then(data => {
+                speechText = 'The chat has been started with the ' + targetTeam + ' team, you should receive a notification in Sparrow shortly.'
+            })
+            .then(data => {
+                console.log(speechText);
+                return handlerInput.responseBuilder
+                    .speak(speechText)
+                    .getResponse();
+            })
+            .catch(err => {
+                speechText = 'Im having trouble sending a page to the ' + targetTeam + ' team. Please try again.';
+                return handlerInput.responseBuilder
+                    .speak(speechText)
+                    .getResponse();
+            })
+    }
+};
+
+const SendSmsMessageHandler = {
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'SendSmsIntent';
+    },
+    handle(handlerInput) {
+        let targetTeam = handlerInput.requestEnvelope.request.intent.slots.group.value;
+        let speechText;
+
+        return SendSmsMessage('This is a page from the DevOps team for the ' + targetTeam + ' team. Please check Sparrow for the chat stream.')
+            .then(data => {
+                speechText = 'An SMS has been sent to the ' + targetTeam + ' team to check for messages in Sparrow.'
+            })
+            .then(data => {
+                console.log(speechText);
+                return handlerInput.responseBuilder
+                    .speak(speechText)
+                    .getResponse();
+            })
+            .catch(err => {
+                speechText = 'Im having trouble sending a page to the ' + targetTeam + ' team. Please try again.';
                 return handlerInput.responseBuilder
                     .speak(speechText)
                     .getResponse();
@@ -281,6 +337,87 @@ function CheckForBadComponents() {
     })
 }
 
+function SendChatMessage(message) {
+    return new Promise((resolve, reject) => {
+        let options = {
+            url: 'https://workflow.dev.api.mitel.io/2017-09-01/webhooks/activities/c0313d39-aaec-40a4-bf17-1881a7ae4a99/workers',
+            method: 'POST',
+            headers: {
+                'x-mitel-accountid': '105990045',
+                'x-mitel-shared-secret': 'welcome1'
+            },
+            json: true,
+            body: {
+                inputs: {
+                    contacts: [
+                        "james.renaud@mitel.com"
+                    ],
+                    operation: "startChat",
+                    chatMessage: message
+                },
+                throughputs: {}
+            }
+        }
+
+        request(options, function (error, response, body) {
+            if (error) {
+                console.log(error);
+                reject(error);
+            }
+            else {
+                if (response.statusCode == 202) {
+                    resolve(true);
+                }
+                else {
+                    let data = JSON.parse(response.body);
+                    resolve(data);
+                }
+            }
+        })
+    })
+}
+
+function SendSmsMessage(message) {
+    return new Promise((resolve, reject) => {
+        let options = {
+            url: 'https://workflow.dev.api.mitel.io/2017-09-01/webhooks/activities/c0313d39-aaec-40a4-bf17-1881a7ae4a99/workers',
+            method: 'POST',
+            headers: {
+                'x-mitel-accountid': '105990045',
+                'x-mitel-shared-secret': 'welcome1'
+            },
+            json: true,
+            body: {
+                inputs: {
+                    contacts: [
+                        "james.renaud@mitel.com"
+                    ],
+                    operation: "sendSms",
+                    phoneNumber: '6138048049',
+                    chatMessage: message
+                },
+                throughputs: {}
+            }
+        }
+
+        request(options, function (error, response, body) {
+            if (error) {
+                console.log(error);
+                reject(error);
+            }
+            else {
+                if (response.statusCode == 202) {
+                    resolve(true);
+                }
+                else {
+                    let data = JSON.parse(response.body);
+                    resolve(data);
+                }
+            }
+        })
+    })
+}
+
 const ErrorHandler = {
     canHandle() {
         return true;
@@ -306,7 +443,9 @@ exports.handler = async function (event, context) {
                 HelpIntentHandler,
                 CancelAndStopIntentHandler,
                 SessionEndedRequestHandler,
-                CheckForIncidentsHandler
+                CheckForIncidentsHandler,
+                SendChatMessageHandler,
+                SendSmsMessageHandler
             )
             .addErrorHandlers(ErrorHandler)
             .create();

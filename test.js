@@ -2,7 +2,7 @@ const event = {
     "version": "1.0",
     "session": {
         "new": true,
-        "sessionId": "amzn1.echo-api.session.44d08e3e-415e-45cb-8cc4-dce5958c396c",
+        "sessionId": "amzn1.echo-api.session.8ee62027-d7a5-4147-814b-cbfa315e0e56",
         "application": {
             "applicationId": "amzn1.ask.skill.c8677c4c-3135-4ab6-b605-6cca24f2a1b7"
         },
@@ -33,21 +33,48 @@ const event = {
                 }
             },
             "apiEndpoint": "https://api.amazonalexa.com",
-            "apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLmM4Njc3YzRjLTMxMzUtNGFiNi1iNjA1LTZjY2EyNGYyYTFiNyIsImV4cCI6MTUyNjU4MjQ3MCwiaWF0IjoxNTI2NTc4ODcwLCJuYmYiOjE1MjY1Nzg4NzAsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUdYNUg0M0xIRTdLN0RWT09UWFJPR0FMQ1ZVNlRKRVUyQjNJTlRVN01UVUEyS0hKU09HQk9RQzZaWFVPSExNQUlBNzNRTVFNVldaT1BFSU82R1pIN0FZVTdTVEJXWkNaUFdUWFlEWERIS1BJNVlNWktLSUVQUldGM0M1R1RLVjNSNlJOQ0QyQU1aV0E0Q1VNN01LRk5NQlhVVFRCTkc2SVRBS0RHV0lUTFZLS0szV0xTNEpVRyIsInVzZXJJZCI6ImFtem4xLmFzay5hY2NvdW50LkFFWEtGRkRDUFlXSEFLVk9LSTdOUlBSQVpUWVBIWlBDTlJJS1FaNDRORk5ORUJQSVNGVUZHRElYSDZQUElSVUhTNllRTUZYVFg1VjRDR0lXV1E3SURKTDRDUU1PR0hXTkVNTk5XS1dMV1BYVU4zUjJHUExIRVFDN1BOTzRLSkxPNkpNUzJPN1FWSVlSMldaSlFUUkJUTE9LV05HT1JDVFU0SVBZU1VMUUU0QUpPSjZURzVZU0NSV0tDNEtXSjZZT0VJREhITEhRQklMWUhTQSJ9fQ.KkKnjpZ9J5eSzQHlBCF4Bk-eq9EVkMOZyCqIGbL3psznBc40RKmdi9yEYsPbzX589OhSF9YiGglLIsWUHPfOCB6h4H8NrJdaaP1oYsas49B7WK6PQY3FY7Qc2uJZi3fVaMrwigjjk6kZ4o9_SeDLQMYb4pIC0Q4bbAH9ztdIhykoCXiD-zVtXa7jsoIExb-cu8U4cxES7e9rLjqkVKZKreaHTkbyCrO1RiphN7tEQ-IyJMhw2ui0gjP4tBePPzfbnDQ2nzdpVLQVyivtrOQoSgrmZtWWWNYCRlyVx5lSsh9eL6Cyqdx1EBX3BLSmKEWl1f3m7xpG6afkgkvFrHrebw"
+            "apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLmM4Njc3YzRjLTMxMzUtNGFiNi1iNjA1LTZjY2EyNGYyYTFiNyIsImV4cCI6MTUyNzI1ODQzOCwiaWF0IjoxNTI3MjU0ODM4LCJuYmYiOjE1MjcyNTQ4MzgsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUdYNUg0M0xIRTdLN0RWT09UWFJPR0FMQ1ZVNlRKRVUyQjNJTlRVN01UVUEyS0hKU09HQk9RQzZaWFVPSExNQUlBNzNRTVFNVldaT1BFSU82R1pIN0FZVTdTVEJXWkNaUFdUWFlEWERIS1BJNVlNWktLSUVQUldGM0M1R1RLVjNSNlJOQ0QyQU1aV0E0Q1VNN01LRk5NQlhVVFRCTkc2SVRBS0RHV0lUTFZLS0szV0xTNEpVRyIsInVzZXJJZCI6ImFtem4xLmFzay5hY2NvdW50LkFFWEtGRkRDUFlXSEFLVk9LSTdOUlBSQVpUWVBIWlBDTlJJS1FaNDRORk5ORUJQSVNGVUZHRElYSDZQUElSVUhTNllRTUZYVFg1VjRDR0lXV1E3SURKTDRDUU1PR0hXTkVNTk5XS1dMV1BYVU4zUjJHUExIRVFDN1BOTzRLSkxPNkpNUzJPN1FWSVlSMldaSlFUUkJUTE9LV05HT1JDVFU0SVBZU1VMUUU0QUpPSjZURzVZU0NSV0tDNEtXSjZZT0VJREhITEhRQklMWUhTQSJ9fQ.kwzMbnc0c-gIW75izfqYS0alOPysnX5nFqDATX4D-bDufxcF3Qpt0qJ-1DHmMa3VZVd1NyUM9vt_V8rtxNb74m9Pydg1udfPrXpEDhvgGW5-X0B40ycrZhV_otERUa36lYsjo-Py6x2nEPBnWbEGQGejSU-dW3piKoLlK0laNX2Er12sIKs6SSBjToF7YeCgctCLQsPSjfofBCoN_m7m8Kh0zUBhIluPTYznkez-C6oKnjuoziYkq-Aa-pyUbltY8A6J7KBmYEV91vG6Jk9_MVXWnrEDo6jyRJF6eDQDC_Jhi-5VJN9qdI4E9aAHU4e3eVcoqSN7DbjBbI17Y_sp_w"
         }
     },
     "request": {
         "type": "IntentRequest",
-        "requestId": "amzn1.echo-api.request.8cdeb084-d16d-49af-98f0-8b7daaabcb55",
-        "timestamp": "2018-05-17T17:41:10Z",
+        "requestId": "amzn1.echo-api.request.8a883430-329d-4aa3-9ec8-8cfcbaaa0fc1",
+        "timestamp": "2018-05-25T13:27:18Z",
         "locale": "en-CA",
         "intent": {
-            "name": "StatusIntent",
-            "confirmationStatus": "NONE"
-        }
+            "name": "SendChatIntent",
+            "confirmationStatus": "NONE",
+            "slots": {
+                "group": {
+                    "name": "group",
+                    "value": "workflow",
+                    "resolutions": {
+                        "resolutionsPerAuthority": [
+                            {
+                                "authority": "amzn1.er-authority.echo-sdk.amzn1.ask.skill.c8677c4c-3135-4ab6-b605-6cca24f2a1b7.PAGE_GROUP",
+                                "status": {
+                                    "code": "ER_SUCCESS_MATCH"
+                                },
+                                "values": [
+                                    {
+                                        "value": {
+                                            "name": "workflow",
+                                            "id": "2e2e2d35a15a6146a9bbbc246a9ea4cd"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "confirmationStatus": "NONE"
+                }
+            }
+        },
+        "dialogState": "STARTED"
     }
 }
 
+const events = require('./events.js');
 const handler = require('./index.js');
 
-handler.handler(event, null, null);
+handler.handler(events.default.SmsIntent, null, null);
