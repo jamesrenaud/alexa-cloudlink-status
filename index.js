@@ -15,6 +15,8 @@ let statusResponses = [
     "The issue has been resolved and we are monitoring for any re-occurrences."
 ]
 
+let innovationDayIssueId = 62;
+
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
         return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
@@ -182,6 +184,52 @@ const SendSmsMessageHandler = {
     }
 };
 
+const AffectedUsersIntentHandler = {
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'AffectedUsersIntent';
+    },
+    handle(handlerInput) {
+        let userCount = getRandomArbitrary(5, 250);
+
+        const speechText = 'Based on the AI analysis, CloudLink reports ' + userCount + ' users are affected by this issue.'
+
+        return handlerInput.responseBuilder
+            .speak(speechText)
+            .reprompt(speechText)
+            .withSimpleCard('Hello World', speechText)
+            .getResponse();
+    }
+};
+
+const OpenStatusIssueIntentHandler = {
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'OpenStatusIssueIntent';
+    },
+    handle(handlerInput) {
+        if (handlerInput.requestEnvelope.request.dialogState === 'STARTED') {
+            return Dialog.delegate();
+        }
+        else if (handlerInput.requestEnvelope.request.dialogState === 'COMPLETED') {
+
+        }
+        else {
+
+        }
+        let description = handlerInput.requestEnvelope.request.intent.slots.group.value;
+        let userCount = getRandomArbitrary(5, 250);
+
+        const speechText = 'Based on the AI analysis, CloudLink reports ' + userCount + ' users are affected by this issue.'
+
+        return handlerInput.responseBuilder
+            .speak(speechText)
+            .reprompt(speechText)
+            .withSimpleCard('Hello World', speechText)
+            .getResponse();
+    }
+};
+
 const HelpIntentHandler = {
     canHandle(handlerInput) {
         return handlerInput.requestEnvelope.request.type === 'IntentRequest'
@@ -293,6 +341,43 @@ function CheckForIncidents() {
     })
 }
 
+function OpenIncident(description) {
+    return new Promise((resolve, reject) => {
+        let statusCreds = {
+            url: "https://status.dev.mitel.io",
+            apiKey: "sTSldlMMXfMMdh4VOVy5"
+        }
+
+        var options = {
+            url: statusCreds.url + '/api/v1/incidents/' + innovationDayIssueId,
+            method: 'PUT',
+            headers: {
+                'X-Cachet-Token': statusCreds.apiKey
+            },
+            json: true,
+            body: {
+                message: description,
+                status: 1
+            }
+        }
+
+        request(options, function (error, response, body) {
+            if (error) {
+                console.log(error);
+                reject(error);
+            }
+            else {
+                if (response.statusCode == 200) {
+                    resolve(true);
+                }
+                else {
+                    let data = JSON.parse(response.body);
+                    reject(data);
+                }
+            }
+        })
+    })
+}
 
 function CheckForBadComponents() {
     return new Promise((resolve, reject) => {
@@ -445,7 +530,10 @@ exports.handler = async function (event, context) {
                 SessionEndedRequestHandler,
                 CheckForIncidentsHandler,
                 SendChatMessageHandler,
-                SendSmsMessageHandler
+                SendSmsMessageHandler,
+                AffectedUsersIntentHandler,
+                OpenStatusIssueIntentHandler,
+                CloseStatusIssueIntentHandler
             )
             .addErrorHandlers(ErrorHandler)
             .create();
@@ -463,4 +551,8 @@ function formatAMPM(date) {
     minutes = minutes < 10 ? '0' + minutes : minutes;
     var strTime = hours + ' ' + minutes + ' ' + ampm;
     return strTime;
+}
+
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
 }
