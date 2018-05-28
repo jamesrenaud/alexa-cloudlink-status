@@ -1,159 +1,234 @@
 <!doctype html>
 <html>
-  <head>
+
+<head>
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Oops, We're Working On It</title>
     <style>
-    /* -------------------------------------
+        /* -------------------------------------
         INLINED WITH htmlemail.io/inline
     ------------------------------------- */
-    /* -------------------------------------
+
+        /* -------------------------------------
         RESPONSIVE AND MOBILE FRIENDLY STYLES
     ------------------------------------- */
-    @media only screen and (max-width: 620px) {
-      table[class=body] h1 {
-        font-size: 28px !important;
-        margin-bottom: 10px !important;
-      }
-      table[class=body] p,
+
+        @media only screen and (max-width: 620px) {
+            table[class=body] h1 {
+                font-size: 28px !important;
+                margin-bottom: 10px !important;
+            }
+            table[class=body] p,
             table[class=body] ul,
             table[class=body] ol,
             table[class=body] td,
             table[class=body] span,
             table[class=body] a {
-        font-size: 16px !important;
-      }
-      table[class=body] .wrapper,
+                font-size: 16px !important;
+            }
+            table[class=body] .wrapper,
             table[class=body] .article {
-        padding: 10px !important;
-      }
-      table[class=body] .content {
-        padding: 0 !important;
-      }
-      table[class=body] .container {
-        padding: 0 !important;
-        width: 100% !important;
-      }
-      table[class=body] .main {
-        border-left-width: 0 !important;
-        border-radius: 0 !important;
-        border-right-width: 0 !important;
-      }
-      table[class=body] .btn table {
-        width: 100% !important;
-      }
-      table[class=body] .btn a {
-        width: 100% !important;
-      }
-      table[class=body] .img-responsive {
-        height: auto !important;
-        max-width: 100% !important;
-        width: auto !important;
-      }
-    }
+                padding: 10px !important;
+            }
+            table[class=body] .content {
+                padding: 0 !important;
+            }
+            table[class=body] .container {
+                padding: 0 !important;
+                width: 100% !important;
+            }
+            table[class=body] .main {
+                border-left-width: 0 !important;
+                border-radius: 0 !important;
+                border-right-width: 0 !important;
+            }
+            table[class=body] .btn table {
+                width: 100% !important;
+            }
+            table[class=body] .btn a {
+                width: 100% !important;
+            }
+            table[class=body] .img-responsive {
+                height: auto !important;
+                max-width: 100% !important;
+                width: auto !important;
+            }
+        }
 
-    /* -------------------------------------
+        /* -------------------------------------
         PRESERVE THESE STYLES IN THE HEAD
     ------------------------------------- */
-    @media all {
-      .ExternalClass {
-        width: 100%;
-      }
-      .ExternalClass,
+
+        @media all {
+            .ExternalClass {
+                width: 100%;
+            }
+            .ExternalClass,
             .ExternalClass p,
             .ExternalClass span,
             .ExternalClass font,
             .ExternalClass td,
             .ExternalClass div {
-        line-height: 100%;
-      }
-      .apple-link a {
-        color: inherit !important;
-        font-family: inherit !important;
-        font-size: inherit !important;
-        font-weight: inherit !important;
-        line-height: inherit !important;
-        text-decoration: none !important;
-      }
-      .btn-primary table td:hover {
-        background-color: #34495e !important;
-      }
-      .btn-primary a:hover {
-        background-color: #34495e !important;
-        border-color: #34495e !important;
-      }
-    }
+                line-height: 100%;
+            }
+            .apple-link a {
+                color: inherit !important;
+                font-family: inherit !important;
+                font-size: inherit !important;
+                font-weight: inherit !important;
+                line-height: inherit !important;
+                text-decoration: none !important;
+            }
+            .btn-primary table td:hover {
+                background-color: #34495e !important;
+            }
+            .btn-primary a:hover {
+                background-color: #34495e !important;
+                border-color: #34495e !important;
+            }
+        }
+
+        /*
+	Ratings Stars
+	(with as little code as possible)
+	Based on Chris Coyier's code - http://css-tricks.com/star-ratings/
+    */
+
+        .rating {
+            unicode-bidi: bidi-override;
+            direction: rtl;
+            text-align: center;
+            font-size: 36px;
+        }
+
+        .rating a {
+            text-decoration: none;
+            color: #DEDEDE;
+            text-shadow: 1px 1px 1px #666666;
+        }
+
+        a:hover {
+            color: #FDD017 !important;
+        }
+
+        .rating>a {
+            display: inline-block;
+            position: relative;
+            width: 1.1em;
+        }
+
+        .rating>a:hover,
+        .rating>a:hover~a {
+            color: transparent;
+        }
+
+        .rating>a:hover:before,
+        .rating>a:hover~a:before {
+            content: "\2605";
+            position: absolute;
+            left: 1;
+            color: #FDD017;
+        }
     </style>
-  </head>
-  <body class="" style="background-color: #f6f6f6; font-family: sans-serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;">
+</head>
+
+<body class="" style="background-color: #f6f6f6; font-family: sans-serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;">
     <table border="0" cellpadding="0" cellspacing="0" class="body" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background-color: #f6f6f6;">
-      <tr>
-        <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">&nbsp;</td>
-        <td class="container" style="font-family: sans-serif; font-size: 14px; vertical-align: top; display: block; Margin: 0 auto; max-width: 580px; padding: 10px; width: 580px;">
-          <div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; max-width: 580px; padding: 10px;">
-            <img data-imagetype="External" src="https://mitel.io/assets/images/logo.png" alt="logo" height="auto" width="118" style="border:none; border-radius:0px; display:block; font-size:13px; outline:none; text-decoration:none; width:25%; height:auto"><br/>
-            <!-- START CENTERED WHITE CONTAINER -->
-            <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">This is preheader text. Some clients will show this text as a preview.</span>
-            <table class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background: #ffffff; border-radius: 3px;">
+        <tr>
+            <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">&nbsp;</td>
+            <td class="container" style="font-family: sans-serif; font-size: 14px; vertical-align: top; display: block; Margin: 0 auto; max-width: 580px; padding: 10px; width: 580px;">
+                <div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; max-width: 580px; padding: 10px;">
+                    <img data-imagetype="External" src="https://mitel.io/assets/images/logo.png" alt="logo" height="auto" width="118" style="border:none; border-radius:0px; display:block; font-size:13px; outline:none; text-decoration:none; width:25%; height:auto">
+                    <br/>
+                    <!-- START CENTERED WHITE CONTAINER -->
+                    <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">We're sorry you had an issue!</span>
+                    <table class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background: #ffffff; border-radius: 3px;">
 
-              <!-- START MAIN CONTENT AREA -->
-              <tr>
-                <td class="wrapper" style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;">
-                  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
-                    <tr>
-                      <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Hi there,</p>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">We recently detected that you encountered some poor audio quality during a call. CloudLink has automatically determined this is not an isolated incident, and has notified the appropriate operations teams to resolve the problem.</p>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">We hope you'll give us another chance while we work to resolve this problem. Click below to reinstall.</p>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Click one of the links below to reinstall.</p>
+                        <!-- START MAIN CONTENT AREA -->
                         <tr>
-                            <td align="left" style="font-family: sans-serif; font-size: 14px; vertical-align: top; padding-bottom: 15px;">
-                              <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;">
-                                <tbody>
-                                  <tr>
-                                    <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: center;"> <a href="https://itunes.apple.com/us/app/mitel-officelink/id1308244548" target="_blank" rel="noopener noreferrer"><img data-imagetype="External" src="https://s3.amazonaws.com/mitel-apps/assets/images/appstore.png" width="135" alt="App Store Badge" style="padding:0 5px"> </a></td>
-                                    <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: center;"> <a href="https://play.google.com/store/apps/details?id=com.mitel.officelink.android" target="_blank" rel="noopener noreferrer"><img data-imagetype="External" src="https://s3.amazonaws.com/mitel-apps/assets/images/googleplay.png" width="135" alt="Google Play Badge" style="padding:0 5px"> </a></td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </td>
-                          </tr>
-                        </table>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">We'll follow up by email when we've implemented a fix for the issue you experienced.</p>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Thanks for using CloudLink!</p>
-                      </td>
+                            <td class="wrapper" style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;">
+                                <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
+                                    <tr>
+                                        <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
+                                            <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Hi there,</p>
+                                            <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">We recently detected that you encountered some poor audio quality during a call.
+                                                The CloudLink platform has automatically determined this is not an isolated
+                                                incident, and has notified the appropriate operations teams.</p>
+                                            <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">We hope you'll give us another chance while we work to resolve this issue.</p>
+                                            <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Click one of the links below to reinstall.</p>
+                                            <tr>
+                                                <td align="left" style="font-family: sans-serif; font-size: 14px; vertical-align: top; padding-bottom: 15px;">
+                                                    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: center;">
+                                                                    <a href="https://itunes.apple.com/us/app/mitel-officelink/id1308244548" target="_blank" rel="noopener noreferrer">
+                                                                        <img data-imagetype="External" src="https://s3.amazonaws.com/mitel-apps/assets/images/appstore.png" width="135" alt="App Store Badge"
+                                                                            style="padding:0 5px"> </a>
+                                                                </td>
+                                                                <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: center;">
+                                                                    <a href="https://play.google.com/store/apps/details?id=com.mitel.officelink.android" target="_blank" rel="noopener noreferrer">
+                                                                        <img data-imagetype="External" src="https://s3.amazonaws.com/mitel-apps/assets/images/googleplay.png" width="135" alt="Google Play Badge"
+                                                                            style="padding:0 5px"> </a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                </table>
+                                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">We'll follow up by email when we've resolved the issue you experienced.</p>
+                                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Thanks for using CloudLink!</p>
+                                <table width="320" border="0" align="center" cellpadding="20" cellspacing="0" style="text-align: center; background-color: #FFFFFF;">
+                                    <tr>
+                                        <td>
+                                            <p>Consider letting us know how you feel.</p>
+                                            <div class="rating">
+                                                <a href="https://cloudlink.wufoo.com/forms/z1mvbjx61hpda7c/def/field1=5" title="5">★</a>
+                                                <a href="https://cloudlink.wufoo.com/forms/z1mvbjx61hpda7c/def/field1=4" title="4">★</a>
+                                                <a href="https://cloudlink.wufoo.com/forms/z1mvbjx61hpda7c/def/field1=3" title="3">★</a>
+                                                <a href="https://cloudlink.wufoo.com/forms/z1mvbjx61hpda7c/def/field1=2" title="2">★</a>
+                                                <a href="https://cloudlink.wufoo.com/forms/z1mvbjx61hpda7c/def/field1=1" title="1">★</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                </td>
+                                </tr>
+                    </table>
+                    </td>
                     </tr>
-                  </table>
-                </td>
-              </tr>
 
-            <!-- END MAIN CONTENT AREA -->
-            </table>
-
-            <!-- START FOOTER -->
-            <div class="footer" style="clear: both; Margin-top: 10px; text-align: center; width: 100%;">
-              <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
-                <tr>
-                  <td class="content-block" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #999999; text-align: center;">
-                    <span class="apple-link" style="color: #999999; font-size: 12px; text-align: center;">Mitel Networks Inc, 350 Legget Drive, Ottawa, ON K2K 2W7</span>
-                    <br> Don't like these emails? <a href="http://i.imgur.com/CScmqnj.gif" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Unsubscribe</a>.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #999999; text-align: center;">
-                    Powered by <a href="http://mitel.io" style="color: #999999; font-size: 12px; text-align: center; text-decoration: none;">CloudLink</a>.
-                  </td>
-                </tr>
-              </table>
-            </div>
-            <!-- END FOOTER -->
-
-          <!-- END CENTERED WHITE CONTAINER -->
-          </div>
-        </td>
-        <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">&nbsp;</td>
-      </tr>
+                    <!-- END MAIN CONTENT AREA -->
     </table>
-  </body>
+
+    <!-- START FOOTER -->
+    <div class="footer" style="clear: both; Margin-top: 10px; text-align: center; width: 100%;">
+        <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
+            <tr>
+                <td class="content-block" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #999999; text-align: center;">
+                    <span class="apple-link" style="color: #999999; font-size: 12px; text-align: center;">Mitel Networks Inc, 350 Legget Drive, Ottawa, ON K2K 2W7</span>
+                    <br> Don't like these emails?
+                    <a href="http://i.imgur.com/CScmqnj.gif" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Unsubscribe</a>.
+                </td>
+            </tr>
+            <tr>
+                <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #999999; text-align: center;">
+                    Powered by
+                    <a href="http://mitel.io" style="color: #999999; font-size: 12px; text-align: center; text-decoration: none;">CloudLink</a>.
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- END FOOTER -->
+
+    <!-- END CENTERED WHITE CONTAINER -->
+    </div>
+    </td>
+    <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">&nbsp;</td>
+    </tr>
+    </table>
+</body>
+
 </html>
