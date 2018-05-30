@@ -190,9 +190,28 @@ const AffectedUsersIntentHandler = {
             && handlerInput.requestEnvelope.request.intent.name === 'AffectedUsersIntent';
     },
     handle(handlerInput) {
-        let userCount = getRandomArbitrary(5, 250);
+        let userCount = Math.floor(getRandomArbitrary(250, 1500));
 
-        const speechText = 'Based on the AI analysis, CloudLink reports ' + userCount + ' users are affected by this issue.'
+        const speechText = 'Based on the issue analysis, CloudLink is reporting ' + userCount + ' users are affected by this issue.'
+
+        return handlerInput.responseBuilder
+            .speak(speechText)
+            .reprompt(speechText)
+            .withSimpleCard('Hello World', speechText)
+            .getResponse();
+    }
+};
+
+const UpdateCustomersIntentHandler = {
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'UpdateCustomersIntent';
+    },
+    handle(handlerInput) {
+        //let userCount = Math.floor(getRandomArbitrary(250, 1500));
+
+
+        const speechText = 'Based on the issue analysis, CloudLink is reporting ' + userCount + ' users are affected by this issue.'
 
         return handlerInput.responseBuilder
             .speak(speechText)
@@ -227,6 +246,50 @@ const OpenStatusIssueIntentHandler = {
             .reprompt(speechText)
             .withSimpleCard('Hello World', speechText)
             .getResponse();
+    }
+};
+
+const UpdateComponentIntentHandler = {
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'UpdateComponentIntent';
+    },
+    handle(handlerInput) {
+        let component = '31'
+        let componentStatus = handlerInput.requestEnvelope.request.intent.slots.statusColor.value;
+        let statusCode;
+        let speechText;
+        switch (componentStatus) {
+            case 'green':
+                statusCode = 1
+                break;
+            case 'yellow':
+                statusCode = 2
+                break;
+            case 'orange':
+                statusCode = 3
+                break;
+            case 'red':
+                statusCode = 4
+                break;
+        }
+
+        return UpdateComponentStatus(statusCode, component)
+            .then(data => {
+                speechText = 'I have updated the audio quality service status to ' + componentStatus;
+            })
+            .then(data => {
+                console.log(speechText);
+                return handlerInput.responseBuilder
+                    .speak(speechText)
+                    .getResponse();
+            })
+            .catch(err => {
+                speechText = 'Im having trouble setting the component to ' + componentStatus + '. Please try again.';
+                return handlerInput.responseBuilder
+                    .speak(speechText)
+                    .getResponse();
+            })
     }
 };
 
@@ -435,7 +498,9 @@ function SendChatMessage(message) {
             body: {
                 inputs: {
                     contacts: [
-                        "james.renaud@mitel.com"
+                        "james.renaud@mitel.com",
+                        "megan.annett@mitel.com",
+                        "paul-h.vandenbosch@mitel.com"
                     ],
                     operation: "startChat",
                     chatMessage: message
@@ -456,6 +521,83 @@ function SendChatMessage(message) {
                 else {
                     let data = JSON.parse(response.body);
                     resolve(data);
+                }
+            }
+        })
+    })
+}
+
+function SendCustomerEmail() {
+    return new Promise((resolve, reject) => {
+        let options = {
+            url: 'https://workflow.dev.api.mitel.io/2017-09-01/webhooks/activities/c0313d39-aaec-40a4-bf17-1881a7ae4a99/workers',
+            method: 'POST',
+            headers: {
+                'x-mitel-accountid': '105990045',
+                'x-mitel-shared-secret': 'welcome1'
+            },
+            json: true,
+            body: {
+                inputs: {
+                    contacts: [
+                        "mitelcl1@gmail.com"
+                    ],
+                    operation: "sendFollowUp"
+                },
+                throughputs: {}
+            }
+        }
+
+        request(options, function (error, response, body) {
+            if (error) {
+                console.log(error);
+                reject(error);
+            }
+            else {
+                if (response.statusCode == 202) {
+                    resolve(true);
+                }
+                else {
+                    let data = JSON.parse(response.body);
+                    resolve(data);
+                }
+            }
+        })
+    })
+}
+
+function UpdateComponentStatus(statusCode, componentId) {
+    return new Promise((resolve, reject) => {
+        let statusCreds = {
+            url: "https://status.dev.mitel.io",
+            apiKey: "sTSldlMMXfMMdh4VOVy5"
+        }
+
+        var options = {
+            url: statusCreds.url + '/api/v1/components/' + componentId,
+            method: 'PUT',
+            json: true,
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Cachet-Token': statusCreds.apiKey
+            },
+            body: {
+                status: statusCode
+            }
+        }
+
+        request(options, function (error, response, body) {
+            if (error) {
+                console.log(error);
+                reject(error);
+            }
+            else {
+                if (response.statusCode == 200) {
+                    resolve(true);
+                }
+                else {
+                    let data = JSON.parse(response.body);
+                    reject(data);
                 }
             }
         })
@@ -533,7 +675,7 @@ exports.handler = async function (event, context) {
                 SendSmsMessageHandler,
                 AffectedUsersIntentHandler,
                 OpenStatusIssueIntentHandler,
-                CloseStatusIssueIntentHandler
+                UpdateComponentIntentHandler
             )
             .addErrorHandlers(ErrorHandler)
             .create();
