@@ -202,25 +202,6 @@ const AffectedUsersIntentHandler = {
     }
 };
 
-const UpdateCustomersIntentHandler = {
-    canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-            && handlerInput.requestEnvelope.request.intent.name === 'UpdateCustomersIntent';
-    },
-    handle(handlerInput) {
-        //let userCount = Math.floor(getRandomArbitrary(250, 1500));
-
-
-        const speechText = 'Based on the issue analysis, CloudLink is reporting ' + userCount + ' users are affected by this issue.'
-
-        return handlerInput.responseBuilder
-            .speak(speechText)
-            .reprompt(speechText)
-            .withSimpleCard('Hello World', speechText)
-            .getResponse();
-    }
-};
-
 const OpenStatusIssueIntentHandler = {
     canHandle(handlerInput) {
         return handlerInput.requestEnvelope.request.type === 'IntentRequest'
@@ -290,6 +271,44 @@ const UpdateComponentIntentHandler = {
                     .speak(speechText)
                     .getResponse();
             })
+    }
+};
+
+const SendFollowUpIntentHandler = {
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'FollowUpIntent';
+    },
+    handle(handlerInput) {
+        return SendCustomerEmail()
+            .then(data => {
+                const speechText = 'Okay, I have notified those customers affected by this issue that it has been resolved. <say-as interpret-as="interjection">giddy up!</say-as>';
+
+                return handlerInput.responseBuilder
+                    .speak(speechText)
+                    .getResponse();
+            })
+            .catch(err => {
+                speechText = 'Im having trouble notifing customers right now. Please try again.';
+                return handlerInput.responseBuilder
+                    .speak(speechText)
+                    .getResponse();
+            })
+
+    }
+};
+
+const JokeIntentHandler = {
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'JokeIntent';
+    },
+    handle(handlerInput) {
+        const speechText = 'Mostly linux servers. <say-as interpret-as="interjection">just kidding!</say-as> Most of the CloudLink platform consists of restful APIs backed by serverless lambdas. <break strength="x-strong"/> That are running <emphasis level="moderate">completely</emphasis> on linux servers.';
+
+        return handlerInput.responseBuilder
+            .speak(speechText)
+            .getResponse();
     }
 };
 
@@ -540,7 +559,9 @@ function SendCustomerEmail() {
             body: {
                 inputs: {
                     contacts: [
-                        "mitelcl1@gmail.com"
+                        "mitelcl1@gmail.com",
+                        "james.renaud@mitel.com",
+                        "megan.annett@mitel.com"
                     ],
                     operation: "sendFollowUp"
                 },
@@ -675,7 +696,9 @@ exports.handler = async function (event, context) {
                 SendSmsMessageHandler,
                 AffectedUsersIntentHandler,
                 OpenStatusIssueIntentHandler,
-                UpdateComponentIntentHandler
+                UpdateComponentIntentHandler,
+                JokeIntentHandler,
+                SendFollowUpIntentHandler
             )
             .addErrorHandlers(ErrorHandler)
             .create();
