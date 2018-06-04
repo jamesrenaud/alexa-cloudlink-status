@@ -196,8 +196,6 @@ const AffectedUsersIntentHandler = {
 
         return handlerInput.responseBuilder
             .speak(speechText)
-            .reprompt(speechText)
-            .withSimpleCard('Hello World', speechText)
             .getResponse();
     }
 };
@@ -304,7 +302,21 @@ const JokeIntentHandler = {
             && handlerInput.requestEnvelope.request.intent.name === 'JokeIntent';
     },
     handle(handlerInput) {
-        const speechText = 'Mostly linux servers. <say-as interpret-as="interjection">just kidding!</say-as> Most of the CloudLink platform consists of restful APIs backed by serverless lambdas. <break strength="x-strong"/> That are running <emphasis level="moderate">completely</emphasis> on linux servers.';
+        let jokes = [
+            'As raindrops say, two’s company, <say-as interpret-as="interjection">three’s a cloud!</say-as>',
+            'I connected my new phone to the cloud, <break time="1250ms"/><say-as interpret-as="interjection">I had mist calls!</say-as>',
+            'I’d tell you a joke about a cloud but it would be over your head.',
+            'A friend of mine is looking for an aerial water storage system. <break time="1250ms"/> <say-as interpret-as="interjection">He’s working on a cloud based solution!</say-as>',
+            'How do you wrap a cloud? <break time="1250ms"/> <say-as interpret-as="interjection">With a rainbow!</say-as>',
+            'What is a cloud’s favourite reptile? <break time="1250ms"/> <say-as interpret-as="interjection">A blizzard!</say-as>',
+            'What does a cloud with an itch do? <break time="1250ms"/> <say-as interpret-as="interjection">Find a skyscraper!</say-as>',
+            'What kind of shorts do clouds wear? <break time="1250ms"/> <say-as interpret-as="interjection">Thunderwear!</say-as>',
+            'What do bosses and clouds have in common? <break time="1250ms"/> <say-as interpret-as="interjection">Your day brightens up when they go away!</say-as>',
+            'I put a fog machine in my data center, so whenever anyone opens the door I can yell <say-as interpret-as="interjection">Welcome to the cloud!</say-as>'
+        ]
+        let jokeSelection = getRandomIntInclusive(0, 9);
+        const speechText = jokes[jokeSelection];
+        //const speechText = 'Mostly linux servers. <say-as interpret-as="interjection">just kidding!</say-as> Most of the CloudLink platform consists of restful APIs backed by serverless lambdas. <break strength="x-strong"/> That are running <emphasis level="moderate">completely</emphasis> on linux servers.';
 
         return handlerInput.responseBuilder
             .speak(speechText)
@@ -519,7 +531,7 @@ function SendChatMessage(message) {
                     contacts: [
                         "james.renaud@mitel.com",
                         "megan.annett@mitel.com",
-                        "paul-h.vandenbosch@mitel.com"
+                        "qw4111111.5@gmail.com"
                     ],
                     operation: "startChat",
                     chatMessage: message
@@ -720,4 +732,10 @@ function formatAMPM(date) {
 
 function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
+}
+
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
 }

@@ -9,6 +9,12 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/test.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Slack Cleaner",
+            "program": "${workspaceFolder}/slack-clean.js"
         }
     ]
 }
